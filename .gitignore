@@ -1,5 +1,4 @@
 __pycache__/
-mnist/
 *.zip
 *.model
 *.optimizer

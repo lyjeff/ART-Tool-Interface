@@ -6,7 +6,7 @@ Created on Mon Jul  5 16:19:31 2021
 """
 
 import torch
-import os
+import os, sys
 import csv
 import time
 import pandas as pd
@@ -21,7 +21,7 @@ import model as modl
 
 
 def Load_Model(filename, model, optimizer, device_type):
-    PATH = os.path.dirname(os.path.abspath(__file__)) + "/"
+    PATH = os.path.dirname(os.path.abspath(sys.argv[0])) + "/"
     PATH_model = PATH + filename + ".model"
     PATH_optim = PATH + filename + ".optimizer"
     isload = False

@@ -6,7 +6,7 @@ Created on Tue Jul  6 15:46:05 2021
 """
 
 from art.estimators.classification import PyTorchClassifier
-import os
+import os, sys
 
 
 def Fit_classifier(model, clip_values, criterion, optimizer, data_Generator, nb_classes, isload, epoch_num,  device_type, text):
@@ -16,7 +16,7 @@ def Fit_classifier(model, clip_values, criterion, optimizer, data_Generator, nb_
         model=model,
         clip_values=clip_values,
         loss=criterion,
-        # optimizer=optimizer,
+        optimizer=optimizer,
         input_shape=(3, 224, 224),
         nb_classes=nb_classes,
         device_type=device_type
@@ -27,6 +27,6 @@ def Fit_classifier(model, clip_values, criterion, optimizer, data_Generator, nb_
         print('Start training ...')
         classifier.fit_generator(data_Generator, nb_epochs=epoch_num)
         classifier.save(filename=text, path=os.path.dirname(
-            os.path.abspath(__file__)))
+            os.path.abspath(sys.argv[0])))
 
     return classifier
