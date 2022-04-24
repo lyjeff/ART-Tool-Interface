@@ -17,15 +17,13 @@ class Argument_Generator():
         parser.add_argument('--interface', type=int, default=1,
                             help='Set to select parameters by which interface (1:GUI, 2:Standard Input, 3:only set on arguments) (default: 1)')
         parser.add_argument('--cuda', type=int, default=0,
-                            help='set the model to run on which gpu (default: 0)')
+                            help='set the model to run on which gpu (-1:"cpu", >=0:"cuda:{CUDA}") default: 0)')
 
         # dataset argument
         parser.add_argument('--dataset-path', type=str,
                             help='training dataset path (default: None)')
         parser.add_argument('--num-workers', type=int, default=8,
                             help='set the number of processes to run (default: 8)')
-        parser.add_argument('--norm', action="store_true", default=False,
-                            help='set to normalize the dataset (default: False)')
 
         # model argument
         parser.add_argument(

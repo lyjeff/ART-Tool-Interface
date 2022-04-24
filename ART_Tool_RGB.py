@@ -66,10 +66,10 @@ def art_rgb(args):
     clip_values = None
 
     # check cuda
-    if torch.cuda.is_available():
-        device_type = f'cuda:{args.cuda}'
-    else:
+    if not torch.cuda.is_available() or args.cuda == -1:
         device_type = 'cpu'
+    else:
+        device_type = f'cuda:{args.cuda}'
 
     # Load Dataset
     dataset_root = args.dataset_path

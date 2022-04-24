@@ -6,8 +6,8 @@ Created on Mon Jul  5 16:19:31 2021
 """
 
 import torch
-import os, sys
-import csv
+import os
+import sys
 import time
 import pandas as pd
 
@@ -27,8 +27,10 @@ def Load_Model(filename, model, optimizer, device_type):
     isload = False
 
     if os.path.isfile(PATH_model) and os.path.isfile(PATH_optim):
-        model.load_state_dict(torch.load(PATH_model, map_location=torch.device(device_type)))
-        optimizer.load_state_dict(torch.load(PATH_optim, map_location=torch.device(device_type)))
+        model.load_state_dict(torch.load(
+            PATH_model, map_location=torch.device(device_type)))
+        optimizer.load_state_dict(torch.load(
+            PATH_optim, map_location=torch.device(device_type)))
         model.eval()
         isload = True
 
@@ -167,12 +169,6 @@ def Save_data(attack_func, text, out_accuracy, attack_select, eps):
     Now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     context = [att_mdl_text, att_text, out_accuracy[0], eps, Now_time]
 
-    # with open(text + '_' + att_text + '_Accuracy.csv', 'a', newline='') as Accuracy_file:
-    #     writer = csv.writer(Accuracy_file)
-    #     writer.writerow(['Attack_Model', 'Attack_Function',
-    #                     'Accuracy', 'eps/conf', 'Time'])
-    #     writer.writerow(context)
-
     try:
         Accuracy_file = pd.read_csv(text + '_' + att_text + '_Accuracy.csv')
 
@@ -180,7 +176,7 @@ def Save_data(attack_func, text, out_accuracy, attack_select, eps):
         Accuracy_file = pd.DataFrame(columns=['Attack_Model',
                                               'Attack_Function', 'Accuracy', 'eps/conf', 'Time'])
 
-    Accuracy_file = Accuracy_file.append(
-        pd.Series(context, index=Accuracy_file.columns), ignore_index=True)
+    Accuracy_file = pd.concat(
+        [Accuracy_file, pd.DataFrame([context], columns=Accuracy_file.columns)], ignore_index=True)
     Accuracy_file.to_csv(text + '_' + att_text +
                          '_Accuracy.csv', header=True, index=False)
